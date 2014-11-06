@@ -9,27 +9,37 @@ class curso(models.Model):
 	def __unicode__(self):
 		return self.nomeCurso
 
+
 class estrutura(models.Model):
-	Estrutura = models.ForeignKey(curso,verbose_name="Evento",null=False)
-
+	Estrutura = models.ForeignKey(curso,verbose_name="Estrutura",null=True)
+	TipoEstrutura = models.CharField('tipo de estrutura',max_length=20,null=True)
 
 
 	def __unicode__(self):
-		return self.Nome
-
-class periodo(models.Model):
-	NumeroPeriodo = models.IntegerField('numero do período',null =False)
-
-	def __unicode__(self):
-		return self.NumeroPeriodo
-
+		return self.TipoEstrutura
 
 
 class disciplina(models.Model):
-	NomeDisciplina = models.IntegerField('nome da disciplina',null=True)
+	NomeDisciplina = models.CharField('nome da disciplina',max_length=30,null=True)
 
 	def __unicode__(self):
-		return self.NomeDisciplina
+		return self.NomeDisciplina	
+
+
+class periodo(models.Model):
+	NumeroPeriodo = models.IntegerField('numero do período',null =True)
+
+	def __unicode__(self):
+		return str(self.NumeroPeriodo)
+
+class estruturaDisciplina(models.Model):
+	Estruct = models.ForeignKey(estrutura,verbose_name="Estrutura",null=False)
+	Period = models.ForeignKey(periodo,verbose_name="Periodo",null=False)
+	Discip = models.ForeignKey(disciplina,verbose_name="Disciplina",null=False)
+
+	def __unicode__(self):
+		return self.Period.NumeroPeriodo
+
 
 
 class semestre(models.Model):
@@ -37,6 +47,22 @@ class semestre(models.Model):
 
 	def __unicode__(self):
 		return self.NumeroSemestre
+
+
+class turma(models.Model):
+	Turma = models.ForeignKey(semestre,verbose_name="Turma",null=True)	
+	NomeTurma = models.CharField('Nome da turma',max_length=1,null=True)
+
+	def __unicode__(self):
+		return self.NomeTurma	
+
+class TurmaDisciplina(models.Model):
+	Turma = models.ForeignKey(turma,verbose_name="Turma",null=True)
+	estruturaDisciplina = models.ForeignKey(estruturaDisciplina,verbose_name="Estrutura Disciplina",null=True)
+
+	def __unicode__(self):
+		return self.Turma.NomeTurma
+
 
 class aluno(models.Model):
 	NomeAluno = models.CharField('Nome',max_length=100,null=True)
@@ -57,11 +83,6 @@ class aluno(models.Model):
 	def __unicode__(self):
 		return self.Nome
 
-class turma(models.Model):
-	NomeTurma = models.CharField('Nome da turma',max_length=1,null=True)
-	
-	def __unicode__(self):
-		return self.NomeTurma
 
 class professor(models.Model):
 	NomeProfessor = models.CharField('Nome do professor',max_length=50,null=True)
@@ -71,4 +92,6 @@ class professor(models.Model):
 
 		
 
-#class horario(models.Model):
+'''class horario(models.Model):
+	HorarioAula = models.DateTimeField()
+'''

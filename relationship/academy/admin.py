@@ -8,6 +8,8 @@ from models import semestre
 from models import aluno
 from models import turma
 from models import professor
+from models import estruturaDisciplina
+from models import TurmaDisciplina
 
 # Register your models here.
 
@@ -45,7 +47,18 @@ class turmaAdmin(admin.ModelAdmin):
 
 class professorAdmin(admin.ModelAdmin):
 	list_display = ['NomeProfessor']
-	save_as = True					
+	save_as = True
+
+class estruturaAdmin(admin.ModelAdmin):
+	list_display = ['TipoEstrutura']
+	save_as = True			
+
+class estruturaDisciplinaAdmin(admin.ModelAdmin):
+	list_display = ['Period','Estruct','Discip']	
+	save_as = True	
+
+class TurmaDisciplinaAdmin(admin.ModelAdmin):
+	list_display = ['Turma','estruturaDisciplina']			
 
 admin.site.register(curso,cursoAdmin)
 admin.site.register(periodo,periodoAdmin)
@@ -54,4 +67,7 @@ admin.site.register(semestre,semestreAdmin)
 admin.site.register(aluno,alunoAdmin)
 admin.site.register(turma,turmaAdmin)
 admin.site.register(professor,professorAdmin)
+admin.site.register(estrutura,estruturaAdmin)
+admin.site.register(estruturaDisciplina,estruturaDisciplinaAdmin)
+admin.site.register(TurmaDisciplina,TurmaDisciplinaAdmin)
 
