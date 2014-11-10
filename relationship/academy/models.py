@@ -2,8 +2,16 @@
 from django.db import models
 from localflavor.br.br_states import STATE_CHOICES
 
+TIPO_CURSO = [
+	('A', 'EXATAS'),
+	('B', 'HUMANAS')
+
+
+]
+
 class curso(models.Model):
 	nomeCurso = models.CharField('nome do curso',max_length=30,null=True)
+	tipoCurso = models.CharField('tipo de curso', max_length=1,choices=TIPO_CURSO,null=True)
 	duracaoCurso = models.IntegerField('duracao do curso',null=True)
 
 	def __unicode__(self):
@@ -38,7 +46,7 @@ class estruturaDisciplina(models.Model):
 	Discip = models.ForeignKey(disciplina,verbose_name="Disciplina",null=False)
 
 	def __unicode__(self):
-		return self.Period.NumeroPeriodo
+		return str(self.Period.NumeroPeriodo)
 
 
 
@@ -46,11 +54,11 @@ class semestre(models.Model):
 	NumeroSemestre = models.IntegerField('numero do semestre',null=True)
 
 	def __unicode__(self):
-		return self.NumeroSemestre
+		return str(self.NumeroSemestre)
 
 
 class turma(models.Model):
-	Turma = models.ForeignKey(semestre,verbose_name="Turma",null=True)	
+	Semestre = models.ForeignKey(semestre,verbose_name="Turma",null=True)	
 	NomeTurma = models.CharField('Nome da turma',max_length=1,null=True)
 
 	def __unicode__(self):
@@ -64,8 +72,8 @@ class TurmaDisciplina(models.Model):
 		return self.Turma.NomeTurma
 
 
-class aluno(models.Model):
-	NomeAluno = models.CharField('Nome',max_length=100,null=True)
+class Pessoa(models.Model):
+	NomePessoa = models.CharField('Nome',max_length=100,null=True)
 	CPF = models.CharField('CPF',max_length=14,unique=True,null=True)
 	DataNascimento = models.DateField('Data de Nascimento',null=True)
 	Telefone = models.CharField('Telefone',max_length=15,null=True)
@@ -81,17 +89,35 @@ class aluno(models.Model):
 	URL = models.URLField ('Página Pessoal', max_length=200,null=True,blank=True)
 
 	def __unicode__(self):
-		return self.Nome
+		return self.NomePessoa
 
-
-class professor(models.Model):
-	NomeProfessor = models.CharField('Nome do professor',max_length=50,null=True)
+'''class aluno(Pessoa):
+	 = models.CharField('Nome da disciplina lecionada',max_length=50,null=True)
 
 	def __unicode__(self):
-		return self.NomeProfessor
+			return self.
+'''
+
+class professor(Pessoa):
+	CursoProfessor = models.CharField('Curso do professor',max_length=50,null=True)
+
+	def __unicode__(self):
+		return self.CursoProfessor
 
 		
 
-'''class horario(models.Model):
-	HorarioAula = models.DateTimeField()
-'''
+class horario(models.Model):
+	InicioHorarioAula = models.DateTimeField('horario de Inicio da aula',null=True)
+	FinalHorarioAula = models.DateTimeField('horario do Final da aula',null=True)
+
+	def __unicode__(self):
+		return self.InicioHorarioAula
+
+
+
+class TurmDiscHorario(models.Model):
+	TurmaDisciplinaHorario = models.ForeignKey(horario,verbose_name="horario aula",null=True)
+	ProfessorTurmaDisciplinaHorario = models.ForeignKey(professor,verbose_name="professor",null=True)
+
+	def __unicode__(self):
+		return self.ProfessorTurmaDisciplinaHorario.NomeProfessor
