@@ -30,7 +30,7 @@ class gradeAdmin(admin.ModelAdmin):
 	save_as = True
 
 class disciplinaAdmin(admin.ModelAdmin):
-	list_display = ['NomeDisciplina']
+	list_display = ['nomeDisciplina','cargahoraria']
 	save_as = True
 
 class periodoAdmin(admin.ModelAdmin):

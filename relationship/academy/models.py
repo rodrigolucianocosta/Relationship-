@@ -4,12 +4,14 @@ from localflavor.br.br_states import STATE_CHOICES
 
 TIPO_CURSO = [
 	('A', 'EXATAS'),
-	('B', 'HUMANAS')
+	('B', 'HUMANAS'),
+	('C', 'BIOLOGICAS')
 
 
 ]
 
 class Curso(models.Model):
+	#grade = models.ForeignKey(Grade,verbose_name="grade curricular",null=True)
 	nomeCurso = models.CharField('nome do curso',max_length=30,null=True)
 	tipoCurso = models.CharField('tipo de curso', max_length=1,choices=TIPO_CURSO,null=True)
 	duracaoCurso = models.IntegerField('duracao do curso',null=True)
@@ -19,7 +21,7 @@ class Curso(models.Model):
 
 
 class Grade(models.Model):
-	curso = models.ForeignKey(Curso,verbose_name="Curso",null=True)
+	#curso = models.ForeignKey(Curso,verbose_name="Curso",null=True)
 	TipoGrade = models.CharField('tipo de grade',max_length=20,null=True)
 
 
@@ -28,10 +30,12 @@ class Grade(models.Model):
 
 
 class Disciplina(models.Model):
-	NomeDisciplina = models.CharField('nome da disciplina',max_length=30,null=True)
+	nomeDisciplina = models.CharField('nome da disciplina',max_length=30,null=True)
+	cargahoraria = models.IntegerField('carga horaria',null=True)
+
 
 	def __unicode__(self):
-		return self.NomeDisciplina	
+		return self.nomeDisciplina	
 
 
 class Periodo(models.Model):
@@ -58,9 +62,10 @@ class GradeDisciplina(models.Model):
 
 
 class Turma(models.Model):
-	semestre = models.ForeignKey(Semestre,verbose_name="Turma",null=True)
+	semestre = models.ForeignKey(Semestre,verbose_name="Semestre",null=True)
 	grade = models.ForeignKey(Grade,verbose_name="Grade",null=True)
-	NomeTurma = models.CharField('Nome da turma',max_length=1,null=True)
+	periodo = models.ForeignKey(Periodo,verbose_name="Periodo",null=True)
+	NomeTurma = models.CharField('Nome da turma',max_length=50,null=True)
 
 	def __unicode__(self):
 		return self.NomeTurma
