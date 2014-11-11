@@ -21,7 +21,7 @@ class Curso(models.Model):
 
 
 class Grade(models.Model):
-	#curso = models.ForeignKey(Curso,verbose_name="Curso",null=True)
+	curso = models.ForeignKey(Curso,verbose_name="Curso",null=True)
 	TipoGrade = models.CharField('tipo de grade',max_length=20,null=True)
 
 
@@ -53,7 +53,7 @@ class Semestre(models.Model):
 
 
 class GradeDisciplina(models.Model):
-	Estruct = models.ForeignKey(Grade,verbose_name="Estrutura",null=False)
+	Estruct = models.ForeignKey(Grade,verbose_name="Grade",null=False)
 	Period = models.ForeignKey(Periodo,verbose_name="Periodo",null=False)
 	Discip = models.ForeignKey(Disciplina,verbose_name="Disciplina",null=False)
 
@@ -64,7 +64,7 @@ class GradeDisciplina(models.Model):
 class Turma(models.Model):
 	semestre = models.ForeignKey(Semestre,verbose_name="Semestre",null=True)
 	grade = models.ForeignKey(Grade,verbose_name="Grade",null=True)
-	periodo = models.ForeignKey(Periodo,verbose_name="Periodo",null=True)
+	#periodo = models.ForeignKey(Periodo,verbose_name="Periodo",null=True)
 	NomeTurma = models.CharField('Nome da turma',max_length=50,null=True)
 
 	def __unicode__(self):
@@ -108,6 +108,19 @@ class Aluno(Pessoa):
 			return self.NomePessoa
 
 
+class TurmaAluno(models.Model):
+	aluno = models.ForeignKey(Aluno,verbose_name="Aluno",null=True)
+	turma = models.ForeignKey(TurmaDisciplina,verbose_name="Turma",null=True)
+
+	def __unicode__(self):
+			return self.NomePessoa			
+
+class Horario(models.Model):
+	InicioHorarioAula = models.DateTimeField('horario de Inicio da aula',null=True)
+	FinalHorarioAula = models.DateTimeField('horario do Final da aula',null=True)
+
+	def __unicode__(self):
+		return self.InicioHorarioAula
 
 class Professor(Pessoa):
 	MatriculaProfessor = models.IntegerField('Numero de matricula do professor',null=True)
@@ -116,22 +129,18 @@ class Professor(Pessoa):
 	def __unicode__(self):
 		return self.NomePessoa
 
-'''
-		
-
-class horario(models.Model):
-	InicioHorarioAula = models.DateTimeField('horario de Inicio da aula',null=True)
-	FinalHorarioAula = models.DateTimeField('horario do Final da aula',null=True)
+class DisciplinaAluno(models.Model):
+	turmaAluno = models.ForeignKey(TurmaAluno,verbose_name="Tuma Aluno",null=True)
+	disciplinaAluno = models.ForeignKey(TurmaDisciplina,verbose_name="Disciplina Aluno",null=True)
 
 	def __unicode__(self):
-		return self.InicioHorarioAula
+		return self.turmaAluno
 
-'''
 
-'''class TurmDiscHorario(models.Model):
-	TurmaDisciplinaHorario = models.ForeignKey(horario,verbose_name="horario aula",null=True)
-	#ProfessorTurmaDisciplinaHorario = models.ForeignKey(professor,verbose_name="professor",null=True)
+class TurmDiscHorario(models.Model):
+	turmaDisciplina = models.ForeignKey(TurmaDisciplina,verbose_name=" Turma DisciplinaAluno",null=True)
+	professor = models.ForeignKey(Professor,verbose_name="Professor",null=True)
+	horario = models.ForeignKey(Horario,verbose_name="Horario",null=True)
 
 	def __unicode__(self):
-		return self.ProfessorTurmaDisciplinaHorario.NomeProfessor
-'''
+		return self.turmaDisciplina.gradeDisciplina.Discip.nomeDisciplina
