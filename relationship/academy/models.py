@@ -9,7 +9,7 @@ TIPO_CURSO = [
 
 ]
 
-class curso(models.Model):
+class Curso(models.Model):
 	nomeCurso = models.CharField('nome do curso',max_length=30,null=True)
 	tipoCurso = models.CharField('tipo de curso', max_length=1,choices=TIPO_CURSO,null=True)
 	duracaoCurso = models.IntegerField('duracao do curso',null=True)
@@ -17,63 +17,64 @@ class curso(models.Model):
 	def __unicode__(self):
 		return self.nomeCurso
 
-'''
-class estrutura(models.Model):
-	Estrutura = models.ForeignKey(curso,verbose_name="Estrutura",null=True)
-	TipoEstrutura = models.CharField('tipo de estrutura',max_length=20,null=True)
+
+class Grade(models.Model):
+	curso = models.ForeignKey(Curso,verbose_name="Curso",null=True)
+	TipoGrade = models.CharField('tipo de grade',max_length=20,null=True)
 
 
 	def __unicode__(self):
-		return self.TipoEstrutura
+		return self.TipoGrade
 
 
-class disciplina(models.Model):
+class Disciplina(models.Model):
 	NomeDisciplina = models.CharField('nome da disciplina',max_length=30,null=True)
 
 	def __unicode__(self):
 		return self.NomeDisciplina	
 
 
-class periodo(models.Model):
+class Periodo(models.Model):
 	NumeroPeriodo = models.IntegerField('numero do período',null =True)
 
 	def __unicode__(self):
 		return str(self.NumeroPeriodo)
 
-class estruturaDisciplina(models.Model):
-	Estruct = models.ForeignKey(estrutura,verbose_name="Estrutura",null=False)
-	Period = models.ForeignKey(periodo,verbose_name="Periodo",null=False)
-	Discip = models.ForeignKey(disciplina,verbose_name="Disciplina",null=False)
+
+class Semestre(models.Model):
+	NumeroSemestre = models.IntegerField('numero do semestre',null=True)
+
+	def __unicode__(self):
+		return str(self.NumeroSemestre)	
+
+
+class GradeDisciplina(models.Model):
+	Estruct = models.ForeignKey(Grade,verbose_name="Estrutura",null=False)
+	Period = models.ForeignKey(Periodo,verbose_name="Periodo",null=False)
+	Discip = models.ForeignKey(Disciplina,verbose_name="Disciplina",null=False)
 
 	def __unicode__(self):
 		return str(self.Period.NumeroPeriodo)
 
 
-
-class semestre(models.Model):
-	NumeroSemestre = models.IntegerField('numero do semestre',null=True)
-
-	def __unicode__(self):
-		return str(self.NumeroSemestre)
-
-'''
-
-'''
-class turma(models.Model):
-	Semestre = models.ForeignKey(semestre,verbose_name="Turma",null=True)	
+class Turma(models.Model):
+	semestre = models.ForeignKey(Semestre,verbose_name="Turma",null=True)
+	grade = models.ForeignKey(Grade,verbose_name="Grade",null=True)
 	NomeTurma = models.CharField('Nome da turma',max_length=1,null=True)
 
 	def __unicode__(self):
-		return self.NomeTurma	
-'''
+		return self.NomeTurma
 
-'''class TurmaDisciplina(models.Model):
-	Turma = models.ForeignKey(turma,verbose_name="Turma",null=True)
-	estruturaDisciplina = models.ForeignKey(estruturaDisciplina,verbose_name="Estrutura Disciplina",null=True)
+	
+
+class TurmaDisciplina(models.Model):
+	gradeDisciplina = models.ForeignKey(Grade,verbose_name="Grade Disciplina",null=True)
+	turma = models.ForeignKey(Turma,verbose_name="Turma",null=True)
+	
 
 	def __unicode__(self):
-		return self.Turma.NomeTurma
-'''
+		return self.turma.NomeTurma
+
 
 '''class Pessoa(models.Model):
 	NomePessoa = models.CharField('Nome',max_length=100,null=True)
