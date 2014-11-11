@@ -113,14 +113,14 @@ class TurmaAluno(models.Model):
 	turma = models.ForeignKey(TurmaDisciplina,verbose_name="Turma",null=True)
 
 	def __unicode__(self):
-			return self.NomePessoa			
+			return self.aluno.NomePessoa			
 
 class Horario(models.Model):
-	InicioHorarioAula = models.DateTimeField('horario de Inicio da aula',null=True)
-	FinalHorarioAula = models.DateTimeField('horario do Final da aula',null=True)
+	InicioHorarioAula = models.TimeField('horario de Inicio da aula',null=True)
+	FinalHorarioAula = models.TimeField('horario do Final da aula',null=True)
 
 	def __unicode__(self):
-		return self.InicioHorarioAula
+		return str(self.InicioHorarioAula)
 
 class Professor(Pessoa):
 	MatriculaProfessor = models.IntegerField('Numero de matricula do professor',null=True)
@@ -134,7 +134,7 @@ class DisciplinaAluno(models.Model):
 	disciplinaAluno = models.ForeignKey(TurmaDisciplina,verbose_name="Disciplina Aluno",null=True)
 
 	def __unicode__(self):
-		return self.turmaAluno
+		return self.turmaAluno.aluno.NomePessoa
 
 
 class TurmDiscHorario(models.Model):
