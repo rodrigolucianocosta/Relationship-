@@ -8,14 +8,21 @@ from models import Semestre
 from models import GradeDisciplina
 from models import Turma
 from models import TurmaDisciplina
+from models import Aluno
+from models import Professor
 '''
 from models import semestre
 #from models import aluno
 from models import turma
-#from models import professor
 from models import horario
 '''
 # Register your models here.
+'''
+#criando inline para curso onde o aluno escolhe qual curso quer fazer
+class ChoiceInline(admin.StackedInline):
+	model = Curso
+	extra = 3
+'''
 
 class cursoAdmin(admin.ModelAdmin):
 	list_display = ['nomeCurso']
@@ -52,24 +59,25 @@ class turmaAdmin(admin.ModelAdmin):
 class turmaDisciplinaAdmin(admin.ModelAdmin):
 	list_display = ['turma','gradeDisciplina']
 	save_as=True
+
+class alunoAdmin(admin.ModelAdmin):
+	list_display = ['NomePessoa']
+	#inlines = [ChoiceInline]
+	save_as = True
+
+class professorAdmin(admin.ModelAdmin):
+	list_display = ['NomePessoa']
+	save_as = True
+
 '''
 class semestreAdmin(admin.ModelAdmin):
 	list_display = ['NumeroSemestre']
-'''
-'''class alunoAdmin(admin.ModelAdmin):
-	list_display = ['NomeAluno','CPF']
-	save_as = True
-'''
-'''
+
 class turmaAdmin(admin.ModelAdmin):
 	list_display = ['NomeTurma']
 	save_as = True
-'''
-'''class professorAdmin(admin.ModelAdmin):
-	list_display = ['NomePessoa']
-	save_as = True
-'''
-'''
+
+
 class estruturaAdmin(admin.ModelAdmin):
 	list_display = ['TipoEstrutura']
 	save_as = True			
@@ -92,10 +100,11 @@ admin.site.register(Semestre,semestreAdmin)
 admin.site.register(GradeDisciplina,gradeDisciplinaAdmin)
 admin.site.register(Turma,turmaAdmin)
 admin.site.register(TurmaDisciplina,turmaDisciplinaAdmin)
+admin.site.register(Aluno,alunoAdmin)
+admin.site.register(Professor,professorAdmin)
 '''
 admin.site.register(semestre,semestreAdmin)
 #admin.site.register(aluno,alunoAdmin)
-#admin.site.register(professor,professorAdmin)
 admin.site.register(Grade,gradeAdmin)
 admin.site.register(horario,horarioAdmin)
 

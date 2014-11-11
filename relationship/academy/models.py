@@ -11,7 +11,7 @@ TIPO_CURSO = [
 ]
 
 class Curso(models.Model):
-	#grade = models.ForeignKey(Grade,verbose_name="grade curricular",null=True)
+	#aluno = models.ForeignKey(Aluno,verbose_name="aluno",null=True)
 	nomeCurso = models.CharField('nome do curso',max_length=30,null=True)
 	tipoCurso = models.CharField('tipo de curso', max_length=1,choices=TIPO_CURSO,null=True)
 	duracaoCurso = models.IntegerField('duracao do curso',null=True)
@@ -81,7 +81,7 @@ class TurmaDisciplina(models.Model):
 		return self.turma.NomeTurma
 
 
-'''class Pessoa(models.Model):
+class Pessoa(models.Model):
 	NomePessoa = models.CharField('Nome',max_length=100,null=True)
 	CPF = models.CharField('CPF',max_length=14,unique=True,null=True)
 	DataNascimento = models.DateField('Data de Nascimento',null=True)
@@ -99,26 +99,27 @@ class TurmaDisciplina(models.Model):
 
 	def __unicode__(self):
 		return self.NomePessoa
-'''
 
-'''class aluno(Pessoa):
+
+class Aluno(Pessoa):
 	MatriculaAluno = models.IntegerField('Numero de matricula do aluno',max_length=50,null=True)
 
 	def __unicode__(self):
-			return self.
-'''
+			return self.NomePessoa
 
-'''
-class professor(Pessoa):
+
+
+class Professor(Pessoa):
 	MatriculaProfessor = models.IntegerField('Numero de matricula do professor',null=True)
-	CursoProfessor = models.CharField('Nome do curso lecionado',max_length=50,null=True)
+	#CursoProfessor = models.CharField('Nome do curso lecionado',max_length=50,null=True)
 
 	def __unicode__(self):
 		return self.NomePessoa
+
 '''
 		
 
-'''class horario(models.Model):
+class horario(models.Model):
 	InicioHorarioAula = models.DateTimeField('horario de Inicio da aula',null=True)
 	FinalHorarioAula = models.DateTimeField('horario do Final da aula',null=True)
 
