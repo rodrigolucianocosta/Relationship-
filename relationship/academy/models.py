@@ -26,7 +26,7 @@ class Grade(models.Model):
 
 
 	def __unicode__(self):
-		return self.TipoGrade
+		return "%s - %s" % (self.TipoGrade,self.curso.nomeCurso) 
 
 
 class Disciplina(models.Model):
