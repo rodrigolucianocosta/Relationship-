@@ -36,7 +36,7 @@ class cursoAdmin(admin.ModelAdmin):
 	save_as = True
 	
 class gradeAdmin(admin.ModelAdmin):
-	list_display = ['TipoGrade','curso']
+	list_display = ['nomeGrade','curso']
 #list_filter = ['']
 #search_fields = ['']
 	save_as = True

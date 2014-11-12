@@ -22,11 +22,12 @@ class Curso(models.Model):
 
 class Grade(models.Model):
 	curso = models.ForeignKey(Curso,verbose_name="Curso",null=True)
-	TipoGrade = models.CharField('tipo de grade',max_length=20,null=True)
+	nomeGrade = models.CharField('Nome de grade',max_length=50,null=True)
+	AnoGrade = models.DateField('Ano da Grade',null=True)
 
 
 	def __unicode__(self):
-		return "%s - %s" % (self.TipoGrade,self.curso.nomeCurso) 
+		return "%s - %s" %(self.nomeGrade,self.curso.nomeCurso) 
 
 
 class Disciplina(models.Model):
