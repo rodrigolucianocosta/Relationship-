@@ -78,7 +78,7 @@ class turmaALunoAdmin(admin.ModelAdmin):
 	save_as = True	
 
 class disciplinaAluno(admin.ModelAdmin):
-	list_display = ['turmaAluno']
+	list_display = ['turmaAluno','turmaDisciplina']
 	save_as= True
 
 class horarioAdmin(admin.ModelAdmin):
