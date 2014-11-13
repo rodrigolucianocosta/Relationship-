@@ -74,7 +74,7 @@ class Turma(models.Model):
 	
 
 class TurmaDisciplina(models.Model):
-	gradeDisciplina = models.ForeignKey(Grade,verbose_name="Grade Disciplina",null=True)
+	gradeDisciplina = models.ForeignKey(GradeDisciplina,verbose_name="Grade Disciplina",null=True)
 	turma = models.ForeignKey(Turma,verbose_name="Turma",null=True)
 	
 
